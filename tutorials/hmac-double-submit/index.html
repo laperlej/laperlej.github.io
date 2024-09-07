@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HMAC Double Submit</title>
+    <style>
+      main {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      h2 {
+        color: #333;
+      }
+      code {
+        background-color: #f4f4f4;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+      pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 4px;
+        overflow-x: auto;
+      }
+    </style>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+
+  <body>
+    <main>
+      <header>
+        <h1>Defend Against XSRF Attacks With HMAC Double Submit</h1>
+      </header>
+      <section>
+        <h2>What is HMAC Double Submit?</h2>
+        <p>
+          HMAC Double Submit is a technique used to prevent Cross-Site Request
+          Forgery (CSRF) attacks. It combines the use of an HMAC (Hash-based
+          Message Authentication Code) token with the double submit cookie
+          pattern.
+        </p>
+      </section>
+      <section>
+        <h2>How it works</h2>
+        <ol>
+          <li>Generate a random token on the server</li>
+          <li>Create an HMAC of the token using a secret key</li>
+          <li>
+            Set the HMAC as a cookie and include it in the form as a hidden
+            field
+          </li>
+          <li>
+            On form submission, verify that the cookie and form field values
+            match
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>Code Example</h2>
+        <h3>Server-side (Node.js)</h3>
+        <pre><code>
+const crypto = require('crypto');
+
+function generateToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
+
+function generateHmac(token, secret) {
+  return crypto.createHmac('sha256', secret)
+    .update(token)
+    .digest('hex');
+}
+
+// Generate token and HMAC
+const token = generateToken();
+const hmac = generateHmac(token, 'your-secret-key');
+
+// Set cookie and send form with hidden field
+res.cookie('csrf_token', hmac, { httpOnly: true });
+res.send(`
+  &lt;form method="POST" action="/submit">
+    &lt;input type="hidden" name="csrf_token" value="${hmac}">
+    &lt;!-- Other form fields -->
+    &lt;button type="submit">Submit&lt;/button>
+  &lt;/form>
+`);
+        </code></pre>
+        <h3>Verification (Node.js)</h3>
+        <pre><code>
+function verifyHmac(req, res, next) {
+  const cookieToken = req.cookies.csrf_token;
+  const formToken = req.body.csrf_token;
+
+  if (cookieToken !== formToken) {
+    return res.status(403).send('CSRF token mismatch');
+  }
+
+  next();
+}
+
+app.post('/submit', verifyHmac, (req, res) => {
+  // Process the form submission
+});
+        </code></pre>
+      </section>
+      <section>
+        <h2>Advantages</h2>
+        <ul>
+          <li>Provides strong protection against CSRF attacks</li>
+          <li>Does not require server-side state</li>
+          <li>Difficult for attackers to forge or predict the token</li>
+        </ul>
+      </section>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>

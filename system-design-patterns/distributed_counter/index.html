@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Distributed Counter</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+
+  <body>
+    <main>
+      <header>
+        <h1>Distributed Counter</h1>
+      </header>
+      <section>
+        <h2>Intro</h2>
+        This pattern has a lot of conceptual overlap with a
+        <a href="/ksg">Key Generation Service</a>. Certain problems appear to be
+        counters, but are actually key generation services in disguise. For
+        example, the free food service design where we want to allow only 6M
+        users out of 20M to press a button. Is better conceptualised as being
+        about assigning 6M consecutive keys.
+      </section>
+      <section></section>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>

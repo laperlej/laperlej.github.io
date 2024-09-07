@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Advanced Vim Motion Cheat Sheet</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+      .terminal {
+        background-color: #1e1e1e;
+        color: #f0f0f0;
+        font-family: monospace;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .terminal h3 {
+        color: #4ec9b0;
+      }
+      .terminal pre {
+        background-color: #252526;
+        padding: 10px;
+        border-radius: 3px;
+      }
+      .cursor {
+        background-color: #f0f0f0;
+        color: #1e1e1e;
+      }
+      .insert-cursor {
+        border-left: 2px solid #f0f0f0;
+      }
+      #vim-mode {
+        font-weight: bold;
+        color: #4ec9b0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <header>
+        <h1>Advanced Vim Motion Cheat Sheet</h1>
+      </header>
+      <section class="vim-motion">
+        <div class="terminal">
+          <h3>Edit function parameters</h4>
+          <h4>Motion: <span id="motion-key">ciw</span></h3>
+            <pre><code id="before-code"><span class="cursor">f</span>unc myFunction(param1 int, param2 int) {</code></pre>
+            <pre><code id="after-code">func myFunction(<span class="insert-cursor"></span>) {</code></pre>
+          </div>
+        </div>
+        <div class="terminal">
+          <h3>Reorder list items</h3>
+          <h4>Motion: <span id="motion-key">C+v -> :s/[\(.*\),\(.*\)]/\2,\1/</span></h4>
+            <pre><code id="before-code">["apple", "banana", "cherry"]</code></pre>
+            <pre><code id="after-code">["banana", "apple", "cherry"]</code></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
