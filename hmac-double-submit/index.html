@@ -71,10 +71,10 @@
         </p>
         <p>
           HMAC double submit is a stateless way to accomplish this. It therefore
-          pairs well with a JWT based authentication system. The key idea is
+          pairs well with a JWT based authentication system.
         </p>
 
-        <h2>How it works</h2>
+        <h3>How it works</h3>
         <ol>
           <li>The server needs a secret key for encryption</li>
           <li>
@@ -92,7 +92,7 @@
             The cookie is sent to the client with the HttpOnly flag set to false
           </li>
           <li>The client reads the cookie and extracts the token</li>
-          <li>The client adds the token to the form as a hidden field</li>
+          <li>The client adds the token to a custom header in the request</li>
           <li>
             On form submission, the server reads the token from the form and the
             cookie, compares them, verifies the signature and makes sure that it
